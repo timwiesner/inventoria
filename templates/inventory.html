@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-	<h1>Categories</h1>
+	<h1>Inventory</h1>
 
 	{% with messages = get_flashed_messages() %}
 		{% if messages %}
@@ -21,7 +21,7 @@
 		<p>No items to display.</p>
 	{% endif %}
 	<br>
-	<a href="#"><h4>Create a New Category</h4></a>
+	<a href="{{url_for('newCategory')}}"><h4>Create a New Category</h4></a>
 
 
 

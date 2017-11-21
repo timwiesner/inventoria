@@ -10,35 +10,35 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-category1 = Category(name="Archive")
+category1 = Category(name="Archives")
 session.add(category1)
 session.commit()
 
-category2 = Category(name="Book")
+category2 = Category(name="Books")
 session.add(category2)
 session.commit()
 
-category3 = Category(name="Broadside")
+category3 = Category(name="Broadsides")
 session.add(category3)
 session.commit()
 
-category4 = Category(name="Letter")
+category4 = Category(name="Letters")
 session.add(category4)
 session.commit()
 
-category5 = Category(name="Map")
+category5 = Category(name="Maps")
 session.add(category5)
 session.commit()
 
-category6 = Category(name="Newspaper")
+category6 = Category(name="Newspapers")
 session.add(category6)
 session.commit()
 
-category7 = Category(name="Pamphlet")
+category7 = Category(name="Pamphlets")
 session.add(category7)
 session.commit()
 
-category8 = Category(name="Photo")
+category8 = Category(name="Photographs")
 session.add(category8)
 session.commit()
 
