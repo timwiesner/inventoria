@@ -22,16 +22,37 @@ session = DBSession()
 
 # Home route
 @app.route('/')
-@app.route('/category')
+@app.route('/inventory')
 def showCategories():
     categories = session.query(Category).all()
-    return render_template('categories.html', categories=categories)
+    return render_template('inventory.html', categories=categories)
+
+
+# New category
+@app.route('/inventory/new', methods=['GET', 'POST'])
+def newCategory():
+    if request.method == 'POST':
+        newCategory = Category(name=request.form['name'])
+        session.add(newCategory)
+        session.commit()
+        flash('New category created!')
+        return redirect(url_for('showCategories'))
+    else:
+        return render_template('newCategory.html')
+
+
+# Specific category Route
+@app.route('/inventory/<int:category_id>/items')
+def showCategory(category_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    items = session.query(Item).filter_by(category_id=category_id).all()
+    return render_template('items.html', category=category, items=items)
 
 
 # Edit category
-@app.route('/category/new')
-def newCategory():
-    return "New category"
+@app.route('/inventory/edit', methods=['GET', 'POST'])
+def editCategory():
+    return render_template('editCategory.html')
 
 
 if __name__ == '__main__':

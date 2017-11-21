@@ -13,7 +13,7 @@
 
 	{% if categories != [] %}
 		{% for category in categories %}
-			<a href="#">
+			<a href="{{url_for('showCategory', category_id = category.id)}}">
 				<h3>{{category.name}}</h3>
 			</a>
 		{% endfor %}
@@ -22,6 +22,8 @@
 	{% endif %}
 	<br>
 	<a href="#"><h4>Create a New Category</h4></a>
+
+
 
 
 {% endblock %}
