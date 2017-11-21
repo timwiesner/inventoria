@@ -59,3 +59,5 @@ class Item(Base):
 engine = create_engine('sqlite:///inventory.db')
 
 Base.metadata.create_all(engine)
+
+print('Database Setup')
