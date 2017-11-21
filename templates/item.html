@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content%}
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		{% for message in messages %}
+			<strong> {{ message }} </strong>
+		{% endfor %}
+	{% endif %}
+{% endwith %}
+
+	<h1>{{category.name}}</h1>
+	<h2>Title: {{item.title}}</h2>
+	<h3>Author: {{item.author}}</h3>
+	<h3>Purchase Price: ${{item.price}}.00</h3>
+
+	<a href="{{url_for('editItem', category_id = category.id, item_id = item.id)}}">Edit</a>
+	<a href="{{url_for('deleteItem', category_id = category.id, item_id = item.id)}}">Delete</a>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<a href="{{url_for('showCategory', category_id = category.id)}}">Go back</a>
+
+
+{% endblock %}

@@ -15,8 +15,8 @@
 
 	{% if items != [] %}
 		{% for item in items %}
-			<a href="#">
-				<h3>{{item.name}}</h3>
+			<a href="{{url_for('showItem', category_id = category.id, item_id = item.id)}}">
+				<h3>{{item.title}}</h3>
 			</a>
 		{% endfor %}
 	{% else %}

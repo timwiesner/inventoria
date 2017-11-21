@@ -39,12 +39,7 @@ class Item(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(250), nullable=False)
     author = Column(String(250))
-    pub_date = Column(Integer)
-    pub_city = Column(String(50))
-    pub_state = Column(String(25))
-    pur_date = Column(Integer)
     price = Column(Integer)
-    pur_from = Column(String(50))
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
     # user_id = Column(Integer, ForeignKey('user.id'))
@@ -57,12 +52,7 @@ class Item(Base):
             'id': self.id,
             'title': self.title,
             'author': self.author,
-            'pub_date': self.pub_date,
-            'pub_city': self.pub_city,
-            'pub_state': self.pub_state,
-            'pur_date': self.pur_date,
             'price': self.price,
-            'pur_from': self.pur_from,
         }
 
 

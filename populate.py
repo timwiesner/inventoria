@@ -43,3 +43,10 @@ session.add(category8)
 session.commit()
 
 print('Categories Added!')
+
+
+item1 = Item(title="Six Watercolor Paintings", category=category1, author="Shaw, Charles", price="1000")
+session.add(item1)
+session.commit()
+
+print('Items added!')
