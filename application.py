@@ -13,11 +13,19 @@ import requests
 
 app = Flask(__name__)
 
+
+engine = create_engine('sqlite:///inventory.db')
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
+
 # Home route
 @app.route('/')
 @app.route('/category')
 def showCategories():
-    return "Show categories"
+    categories = session.query(Category).all()
+    return render_template('categories.html', categories=categories)
 
 
 # Edit category

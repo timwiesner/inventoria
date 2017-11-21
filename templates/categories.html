@@ -1,4 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
+	<h1>Categories</h1>
+
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+				<strong> {{ message }} </strong>
+			{% endfor %}
+		{% endif %}
+  {% endwith %}
+
+	{% if categories != [] %}
+		{% for category in categories %}
+			<a href="#">
+				<h3>{{category.name}}</h3>
+			</a>
+		{% endfor %}
+	{% else %}
+		<p>No items to display.</p>
+	{% endif %}
+	<br>
+	<a href="#"><h4>Create a New Category</h4></a>
+
+
 {% endblock %}
