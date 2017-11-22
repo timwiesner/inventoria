@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, Item
+from database_setup import Base, Category, Item, User
 
 
 engine = create_engine('sqlite:///inventory.db')
@@ -8,6 +8,14 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+
+# Create dummy user
+User1 = User(name="Erlich Bachman", email="bachman@aviato.com",
+             picture='https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAh-AAAAJDA3NTM0ODEyLTlhODQtNDZlNi1hMjE5LTRlMWIyNDFiZDY0Zg.jpg')
+session.add(User1)
+session.commit()
+print('User Added!')
 
 
 category1 = Category(name="Archives")

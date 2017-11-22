@@ -102,3 +102,5 @@ ENV/
 
 # personal starter files
 starter/
+
+client_secrets.json

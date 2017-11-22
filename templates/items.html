@@ -23,7 +23,7 @@
 		<p>No items to display.</p>
 	{% endif %}
 	<br>
-	<a href="#"><h4>Create a New Item</h4></a>
+	<a href="{{url_for('newItem', category_id = category.id)}}"><h4>Create a New Item</h4></a>
 
 	<a href="{{url_for('showCategories')}}">Go Back</a>
 
