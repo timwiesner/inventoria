@@ -10,8 +10,8 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-# Create admin
-user1 = User(name="admin", email="admin@localhost.com", admin=True)
+# Create dummy user
+user1 = User(name="erlich", email="bachman@aviato.com")
 session.add(user1)
 session.commit()
 print('user1 added')
