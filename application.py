@@ -33,7 +33,6 @@ def showLogin():
                     for x in range(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
-    # return "The current session state is %s " % login_session['state']
 
 
 @app.route('/gconnect', methods=['POST'])
@@ -130,8 +129,7 @@ def gconnect():
 
 def createUser(login_session):
     newUser = User(name=login_session['username'],
-                    email=login_session['email'],
-                    picture=login_session['picture'])
+                    email=login_session['email'])
     session.add(newUser)
     session.commit()
     user = session.query(User).filter_by(email=login_session['email']).one()
@@ -178,10 +176,8 @@ def gdisconnect():
         del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
-        del login_session['picture']
-        response = make_response(json.dumps('Successfully disconnected.'), 200)
-        response.headers['Content-Type'] = 'application/json'
-        return response
+        flash('Logout Successful')
+        return redirect(url_for('showCategories'))
     else:
         response = make_response(json.dumps('Failed to revoke token.', 400))
         response.headers['Content-Type'] = 'application/json'
@@ -197,7 +193,7 @@ def categoryJSON(category_id):
     return jsonify(Categories=[i.serialize for i in items])
 
 
-@app.route('/Category/<int:category_id>/items/<int:item_id>/JSON/')
+@app.route('/inventory/<int:category_id>/items/<int:item_id>/JSON/')
 def itemJSON(category_id, item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     return jsonify(Item=item.serialize)
@@ -214,6 +210,8 @@ def inventoryJSON():
 @app.route('/inventory/')
 def showCategories():
     categories = session.query(Category).all()
+    if 'username' not in login_session:
+        return render_template('publicInventory.html', categories=categories)
     return render_template('inventory.html', categories=categories)
 
 

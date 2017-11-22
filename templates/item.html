@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block content%}
+{% block content %}
+{% include "header.html" %}
 
 {% with messages = get_flashed_messages() %}
 	{% if messages %}
