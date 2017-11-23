@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for
 from flask import flash, make_response, session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, Item, User
+from db_setup import Base, Category, Item, User
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import random
@@ -137,7 +137,7 @@ def createUser(login_session):
 
 
 def getUserInfo(user_id):
-    user = session.query(User).filter_by(id=user_id).first()
+    user = session.query(User).filter_by(id=user_id).one()
     return user
 
 
@@ -233,9 +233,11 @@ def newCategory():
 # Edit category
 @app.route('/inventory/<int:category_id>/edit/', methods=['GET', 'POST'])
 def editCategory(category_id):
+    editedCategory = session.query(Category).filter_by(id=category_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-    editedCategory = session.query(Category).filter_by(id=category_id).one()
+    if editedCategory.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this category.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editedCategory.name = request.form['name']
@@ -248,9 +250,11 @@ def editCategory(category_id):
 # Delete category
 @app.route('/inventory/<int:category_id>/delete/', methods=['GET', 'POST'])
 def deleteCategory(category_id):
+    deletedCategory = session.query(Category).filter_by(id=category_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-    deletedCategory = session.query(Category).filter_by(id=category_id).one()
+    if deletedCategory.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to delete this category.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(deletedCategory)
         session.commit()
@@ -266,6 +270,8 @@ def deleteCategory(category_id):
 def showCategory(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).all()
+    if 'username' not in login_session:
+        return render_template('publicItems.html', items=items, category=category)
     return render_template('items.html', category=category, items=items)
 
 
@@ -274,6 +280,8 @@ def showCategory(category_id):
 def showItem(category_id, item_id):
     category = session.query(Category).filter_by(id=category_id).one()
     item = session.query(Item).filter_by(id=item_id).one()
+    if 'username' not in login_session:
+        return render_template('publicItem.html', category=category, item=item)
     return render_template('item.html', category=category, item=item)
 
 
